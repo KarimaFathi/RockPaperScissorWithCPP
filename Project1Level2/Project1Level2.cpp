@@ -3,7 +3,7 @@
 using namespace std;
 
 enum gameChoices  { rock = 1, paper = 2, scissor = 3 };
-enum replayChoices { Y = 1, N = 0};
+
 
 short readNumber(string message) {
 	int number;
@@ -25,7 +25,7 @@ gameChoices getComputerChoice() {
 }
 
 gameChoices getUserChoice() {
-	int userChoice = readNumber("Your Choice: [1]:Stone, [2]:Paper, [3]:Scissors ?");
+	int userChoice = readNumber("Your Choice: [1]:Stone, [2]:Paper, [3]:Scissors ? ");
 	return (gameChoices)userChoice;
 }
 
@@ -115,17 +115,42 @@ void announceFinalResult(int number, int userCounter, int computerCounter, int d
 	cout << "\t\t_________________________________________________________\n";
 }
 
+bool askToReplay() {
+	char replay;
+	cout << "Do you want to play again ? Y/N ? ";
+	cin >> replay;
+	if (toupper(replay) == 'Y') {
+		return true;
+	}
+	else if (toupper(replay) == 'N') {
+		return false;
+	}
+	else {
+		cout << "Invalid Input. \n";
+		return askToReplay();
+	}
+}
+
+
 
 int main()
 {
+	bool replay = true;
+	while (replay) {
+		system("cls");
+		system("color 0F");
 
-	int numberOfRounds = readNumber("How Many Rounds You Want To Play ( 1 to 10 ) ? \n");
-	
-	srand((unsigned)time(NULL));
+		int numberOfRounds = readNumber("How Many Rounds You Want To Play ( 1 to 10 ) ? \n");
 
-	int userCounter = 0, computerCounter = 0, drawCounter = 0;
-	playAllRounds(numberOfRounds, userCounter, computerCounter, drawCounter);
-	announceFinalResult(numberOfRounds, userCounter, computerCounter, drawCounter);
-	
+		srand((unsigned)time(NULL));
+
+		int userCounter = 0, computerCounter = 0, drawCounter = 0;
+		playAllRounds(numberOfRounds, userCounter, computerCounter, drawCounter);
+		announceFinalResult(numberOfRounds, userCounter, computerCounter, drawCounter);
+
+		replay = askToReplay();
+	}
+	cout << "Thanks for playing! Goodbye!" << endl;
+	return 0;
 }
 
