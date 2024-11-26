@@ -1,2 +1,3 @@
 ﻿  Project1Level2.cpp
+D:\RockPaperScissorWithCPP\Project1Level2\Project1Level2.cpp(60,1): warning C4715: 'getChoiceName': not all control paths return a value
   Project1Level2.vcxproj -> D:\RockPaperScissorWithCPP\Project1Level2\x64\Debug\Project1Level2.exe

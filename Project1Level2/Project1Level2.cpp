@@ -1,8 +1,9 @@
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 enum gameChoices  { rock = 1, paper = 2, scissor = 3 };
-//enum gameRules { winner = 1, };
+enum replayChoices { Y = 1, N = 0};
 
 short readNumber(string message) {
 	int number;
@@ -15,7 +16,7 @@ short readNumber(string message) {
 
 
 int random(int from, int to) {
-	return rand() % (from - to + 1) + from;
+	return rand() % (to - from + 1) + from;
 }
 
 gameChoices getComputerChoice() {
@@ -29,9 +30,9 @@ gameChoices getUserChoice() {
 }
 
 string playRound(gameChoices userChoice, gameChoices computerChoice) {
-	/*for (int i = 1; i <= number; i++) {
-		cout << "Round [" << i << "] begins:\n";*/
-		if ((userChoice == ::rock && computerChoice == ::scissor) || userChoice == ::scissor && computerChoice == ::paper) {
+		if ((userChoice == ::rock && computerChoice == ::scissor) || 
+			(userChoice == ::scissor && computerChoice == ::paper) || 
+			(userChoice == ::paper && computerChoice == ::rock)) {
 			system("color 2F");
 			return "user";
 		}
@@ -41,26 +42,90 @@ string playRound(gameChoices userChoice, gameChoices computerChoice) {
 		}
 		else {
 			system("color 4F");
+			cout << "\a";
 			return "computer";
 		}
-	//}
+}
+
+
+string getChoiceName(gameChoices choices) {
+	switch (choices) {
+	case(::rock):
+		return "Rock";
+	case(::paper):
+		return "Paper";
+	case(::scissor):
+		return "Scissor";
+	}
 }
 
 void showRoundResult(gameChoices userChoice, gameChoices computerChoice) {
-	cout << "Player1 Choice  : " << userChoice << endl;
-	cout << "Computer Choice : " << computerChoice << endl;
+	cout << "Player1 Choice  : " << getChoiceName(userChoice) << endl;
+	cout << "Computer Choice : " << getChoiceName(computerChoice) << endl;
 	cout << "Round Winner    : " << "[" << playRound(userChoice, computerChoice) << "]\n";
+}
+
+void playAllRounds(int number, int &userCounter, int &computerCounter, int &drawCounter) {
+	string result;
+	gameChoices userChoice;
+	gameChoices computerChoice;
+	
+	for (int i = 1; i <= number; i++) {
+		cout << "_______________ Round [" << i << "] _______________\n";
+
+		userChoice = getUserChoice();
+		computerChoice = getComputerChoice();
+		result = playRound(userChoice, computerChoice);
+		if (result == "user") {
+			userCounter++;
+		}
+		else if (result == "computer") {
+			computerCounter++;
+		}
+		else drawCounter++;
+	    showRoundResult(userChoice, computerChoice);
+		cout << "__________________________________________\n";
+	}
+}
+
+void announceFinalResult(int number, int userCounter, int computerCounter, int drawCounter) {
+	string finalWinner;
+	if (userCounter > computerCounter) {
+		system("color 2F");
+		finalWinner = "Player 1";
+	}
+	else if (userCounter == computerCounter) {
+		system("color 6F");
+		finalWinner = "No one is the winner";
+	}
+	else {
+		cout << "\a";
+		system("color 4F");
+		finalWinner = "Computer";
+	}
+	cout << "\t\t_________________________________________________________\n";
+	cout << "\t\t\t            +++ G a m e  O v e r +++\n";
+	cout << "\t\t_________________________________________________________\n";
+	cout << "\t\t_________________ [ Game Final Scores ] _________________\n";
+	cout << "\t\tGame Rounds           : " << number << endl;
+	cout << "\t\tPlayer 1 won times    : " << userCounter << endl;
+	cout << "\t\tComputer won times    : " << computerCounter << endl;
+	cout << "\t\tDraw times            : " << drawCounter << endl;
+	cout << "\t\tFinal Winner          : " << finalWinner << endl;
+	cout << "\t\t_________________________________________________________\n";
 }
 
 
 int main()
 {
-	//int numberOfRounds = readNumber("How Many Rounds You Want To Play ( 1 to 10 ) ? \n");
-	srand((unsigned)time(NULL));
-	gameChoices computerChoice = getComputerChoice();
-	gameChoices userChoice = getUserChoice();
-	showRoundResult(userChoice, computerChoice);
+
+	int numberOfRounds = readNumber("How Many Rounds You Want To Play ( 1 to 10 ) ? \n");
+	
 	srand((unsigned)time(NULL));
 
+	int userCounter = 0, computerCounter = 0, drawCounter = 0;
+	playAllRounds(numberOfRounds, userCounter, computerCounter, drawCounter);
+	announceFinalResult(numberOfRounds, userCounter, computerCounter, drawCounter);
+	
 }
 
