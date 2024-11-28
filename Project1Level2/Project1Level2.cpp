@@ -3,6 +3,24 @@
 using namespace std;
 
 enum gameChoices  { rock = 1, paper = 2, scissor = 3 };
+enum enWinner { player = 1, computer = 2, draw = 3 };
+
+
+string setWinnerScreenColor(enWinner winner) {
+	switch (winner) {
+	case(::player):
+		system("color 2F");
+		return "Player 1";
+	case(::computer):
+		system("color 4F");
+		cout << "\a";
+		return "Computer";
+	case(::draw):
+		system("color 6F");
+		return "No winner";
+
+	}
+}
 
 
 short readNumber(string message) {
@@ -33,17 +51,13 @@ string playRound(gameChoices userChoice, gameChoices computerChoice) {
 		if ((userChoice == ::rock && computerChoice == ::scissor) || 
 			(userChoice == ::scissor && computerChoice == ::paper) || 
 			(userChoice == ::paper && computerChoice == ::rock)) {
-			system("color 2F");
-			return "user";
+			return setWinnerScreenColor(::player);
 		}
 		else if (userChoice == computerChoice) {
-			system("color 6F");
-			return "no winner";
+			return setWinnerScreenColor(::draw);
 		}
 		else {
-			system("color 4F");
-			cout << "\a";
-			return "computer";
+			return setWinnerScreenColor(::computer);
 		}
 }
 
@@ -71,15 +85,15 @@ void playAllRounds(int number, int &userCounter, int &computerCounter, int &draw
 	gameChoices computerChoice;
 	
 	for (int i = 1; i <= number; i++) {
-		cout << "_______________ Round [" << i << "] _______________\n";
+		cout << "_______________ Round [" << i << "] ________________\n";
 
 		userChoice = getUserChoice();
 		computerChoice = getComputerChoice();
 		result = playRound(userChoice, computerChoice);
-		if (result == "user") {
+		if (result == "Player 1") {
 			userCounter++;
 		}
-		else if (result == "computer") {
+		else if (result == "Computer") {
 			computerCounter++;
 		}
 		else drawCounter++;
@@ -91,17 +105,16 @@ void playAllRounds(int number, int &userCounter, int &computerCounter, int &draw
 void announceFinalResult(int number, int userCounter, int computerCounter, int drawCounter) {
 	string finalWinner;
 	if (userCounter > computerCounter) {
-		system("color 2F");
-		finalWinner = "Player 1";
+		finalWinner = setWinnerScreenColor(::player);
 	}
 	else if (userCounter == computerCounter) {
-		system("color 6F");
-		finalWinner = "No one is the winner";
+	
+		finalWinner = setWinnerScreenColor(::draw);
 	}
 	else {
 		cout << "\a";
 		system("color 4F");
-		finalWinner = "Computer";
+		finalWinner = setWinnerScreenColor(::computer);
 	}
 	cout << "\t\t_________________________________________________________\n";
 	cout << "\t\t\t            +++ G a m e  O v e r +++\n";
@@ -130,8 +143,6 @@ bool askToReplay() {
 		return askToReplay();
 	}
 }
-
-
 
 int main()
 {
