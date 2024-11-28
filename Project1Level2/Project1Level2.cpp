@@ -43,7 +43,12 @@ gameChoices getComputerChoice() {
 }
 
 gameChoices getUserChoice() {
-	int userChoice = readNumber("Your Choice: [1]:Stone, [2]:Paper, [3]:Scissors ? ");
+	int userChoice = 1;
+	do
+	{
+		cout << "\nYour Choice: [1]:Stone, [2]:Paper, [3]:Scissors? ";
+		cin >> userChoice;
+	} while (userChoice < 1 || userChoice >3);
 	return (gameChoices)userChoice;
 }
 
