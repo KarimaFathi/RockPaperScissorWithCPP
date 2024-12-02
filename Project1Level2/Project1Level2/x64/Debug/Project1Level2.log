@@ -1,4 +1,4 @@
 ﻿  Project1Level2.cpp
 D:\RockPaperScissorWithCPP\Project1Level2\Project1Level2.cpp(23,1): warning C4715: 'setWinnerScreenColor': not all control paths return a value
-D:\RockPaperScissorWithCPP\Project1Level2\Project1Level2.cpp(74,1): warning C4715: 'getChoiceName': not all control paths return a value
+D:\RockPaperScissorWithCPP\Project1Level2\Project1Level2.cpp(79,1): warning C4715: 'getChoiceName': not all control paths return a value
   Project1Level2.vcxproj -> D:\RockPaperScissorWithCPP\Project1Level2\x64\Debug\Project1Level2.exe
