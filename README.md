@@ -1,4 +1,4 @@
-# Rock, Paper, Scissors Game
+# Rock, Paper, Scissor Game
 ## Description
 This is a simple implementation of the Rock, Paper, Scissors game in C++, where the user competes against the computer. The game is played for a user-defined number of rounds (1 to 10), and the final winner is announced based on the results of each round. The game supports multiple rounds and displays colorful outputs based on the outcome of each round (Player, Computer, or Draw).
 
@@ -16,3 +16,5 @@ This is a simple implementation of the Rock, Paper, Scissors game in C++, where 
 + At the end of all rounds, the program will display the final score and the overall winner.
 
 ## Output
+
+![RockPaperScissor game output](images/GameOutput.png)
